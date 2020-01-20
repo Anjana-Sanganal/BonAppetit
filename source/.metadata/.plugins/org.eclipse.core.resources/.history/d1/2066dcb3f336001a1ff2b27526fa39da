@@ -1,0 +1,74 @@
+package com.app.pojos;
+
+import java.util.*;
+
+import javax.persistence.*;
+
+@Entity
+public class OrderDetails 
+{
+	private Integer odetailsId;
+	private int quantity;
+	private double price;
+	private Order currentOrder;
+	private List<Item> items = new ArrayList<>();
+	
+	public OrderDetails() { }
+	
+	
+	public OrderDetails(int quantity, double price) {
+		super();
+		this.quantity = quantity;
+		this.price = price;
+	}
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "odetails_id")
+	public Integer getOdetailsId() {
+		return odetailsId;
+	}
+
+
+	public void setOdetailsId(Integer odetailsId) {
+		this.odetailsId = odetailsId;
+	}
+	
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+	public double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	
+	@OneToOne
+	@JoinColumn(name = "order_id")
+	public Order getOrder() {
+		return currentOrder;
+	}
+	public void setOrder(Order order) {
+		this.currentOrder = order;
+	}
+	
+	@OneToMany(mappedBy = "orderDetails",cascade = CascadeType.ALL)
+	public List<Item> getItems() {
+		return items;
+	}
+	public void setItems(List<Item> items) {
+		this.items = items;
+	}
+	@Override
+	public String toString() {
+		return "OrderDetails [odetails_id=" + odetailsId + ", quantity=" + quantity + ", price=" + price + ", order="
+				+ currentOrder + "]";
+	}
+	
+	
+}

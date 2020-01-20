@@ -1,0 +1,12 @@
+package com.app.pojos;
+
+public class Location 
+{
+	private Integer locationId;
+	private String locationName;
+	private int pincode;
+	
+	public Location() {}
+	
+	
+}
