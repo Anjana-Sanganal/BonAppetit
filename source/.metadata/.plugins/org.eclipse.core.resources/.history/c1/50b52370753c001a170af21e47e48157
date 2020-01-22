@@ -1,0 +1,17 @@
+package com.app.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.app.dao.IItemDao;
+
+@Service
+@Transactional
+public interface IItemService 
+{
+	@Autowired
+	private IItemDao dao;
+	
+	public 
+}

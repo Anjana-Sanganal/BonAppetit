@@ -1,0 +1,22 @@
+package com.app.dao;
+
+import java.util.List;
+
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.app.pojos.Hotel;
+
+@Repository
+public class HotelDaoImpl implements IHotelDao
+{
+	@Autowired
+	private SessionFactory sf;
+	@Override
+	public List<Hotel> getAllHotels() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

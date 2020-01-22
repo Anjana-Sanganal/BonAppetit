@@ -1,0 +1,15 @@
+package com.app.dao;
+
+import java.util.List;
+
+import com.app.pojos.Hotel;
+
+public class HotelDaoImpl implements IHotelDao {
+
+	@Override
+	public List<Hotel> getAllHotels() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

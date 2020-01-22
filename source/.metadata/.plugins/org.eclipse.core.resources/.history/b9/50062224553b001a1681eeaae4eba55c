@@ -1,0 +1,45 @@
+package com.app.dao;
+
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.app.pojos.User;
+
+@Repository
+public class UserDaoImpl implements IUserDao {
+
+	@Autowired
+	private SessionFactory sf;
+	
+	
+	@Override
+	public User validateUser(String email, String password) {
+		String jpql = "select u from User u where u.email=:email and u.passwd=:password";
+		System.out.println("in validate user");
+		return sf.getCurrentSession().createQuery(jpql, User.class).setParameter("email", email)
+				.setParameter("password", password).getSingleResult();
+	}
+	
+	@Override
+	public User registerUser(User u) 
+	{
+	
+	}
+
+	
+	@Override
+	public String updatePassword(User u) 
+	{
+		
+		return null;
+	}
+
+	@Override
+	public User getUserById(int id) 
+	{
+		
+		return null;
+	}
+
+}

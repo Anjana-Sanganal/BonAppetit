@@ -1,0 +1,33 @@
+package com.app.dao;
+
+import java.util.List;
+
+import com.app.pojos.Item;
+
+public class ItemDaoImpl implements IItemDao {
+
+	@Override
+	public List<Item> getItemsByHotel(int hotel_id) {
+		String jpql = "select i from Item i";
+		return null;
+	}
+
+	@Override
+	public Item getItemById(int itemId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Item addItem(Item i) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Item editPrice(int itemId, Item i) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

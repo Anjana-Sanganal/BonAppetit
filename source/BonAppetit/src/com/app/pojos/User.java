@@ -4,6 +4,8 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "user")
 public class User 
@@ -118,12 +120,26 @@ public class User
 	}
 
 	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
+	@JsonIgnore
 	public List<Order> getOrders() {
 		return orders;
 	}
 
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
+	}
+	
+	//convenience method
+	public void addOrder(Order o)
+	{
+		orders.add(o);
+		o.setUser(this);
+	}
+	
+	public void removeOrder(Order o)
+	{
+		orders.remove(o);
+		o.setUser(null);
 	}
 
 	@Override

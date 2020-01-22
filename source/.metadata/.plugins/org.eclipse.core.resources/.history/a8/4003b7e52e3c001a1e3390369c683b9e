@@ -1,0 +1,104 @@
+package com.app.controller;
+
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+
+import javax.servlet.http.*;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.app.pojos.Role;
+import com.app.pojos.User;
+import com.app.services.IUserService;
+
+@RestController // @Controller + @RespBody
+@CrossOrigin//(origins="http://localhost:4200")
+@RequestMapping("/users")
+public class UserController 
+{
+	@Autowired
+	private IUserService service;
+	
+	@PostConstruct
+	public void init()
+	{
+		System.out.println("in init " + service);
+	}
+	
+	
+	@PostMapping("/login") 
+	public String processLoginForm(@RequestBody User u)
+	{
+		System.out.println("in process login form " + u.getEmail() + " " + u.getPassword());
+
+		try {
+			User user = service.validateUser(u.getEmail(), u.getPassword());
+					
+			
+			if (user.getRole().equals(Role.ADMIN))			
+				return "redirect:/admin/adminhome";
+			else if(u.getRole().equals(Role.CUSTOMER))
+				return "redirect:/customer/customerhome";
+			else
+				return "redirect:/owner/ownerhome";
+
+		} catch (RuntimeException e) {
+			System.out.println("Login not done");
+			return "/user/login";
+
+		}
+	}
+	
+	@GetMapping
+	public ResponseEntity<?> allUsers() 
+	{
+		System.out.println("in list all users");
+		List<User> allUsers = service.getAllUsers();
+		if (allUsers.size() == 0)
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<List<User>>(allUsers, HttpStatus.OK);
+	}
+	
+	@GetMapping("/{userId}")
+	public ResponseEntity<?> getUserDetails(@PathVariable int userId)
+	{
+		System.out.println("in user details " + userId);
+		User u = service.getUserById(userId);
+		if (u == null)
+			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<User>(u, HttpStatus.OK);
+	}
+	
+	@PostMapping
+	public ResponseEntity<?> registerUser(@RequestBody User u) 
+	{
+		System.out.println("in register user " + u);
+		try {
+			return new ResponseEntity<User>(service.registerUser(u), HttpStatus.CREATED);
+		} catch (RuntimeException e1) {
+			e1.printStackTrace();
+			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+	
+	@PostMapping("/updatepwd")
+	public String changePassword(HttpSession hs,@RequestBody String password) {
+		System.out.println("in update pwd "+password);
+		User u = (User) hs.getAttribute("user_dtls");
+		System.out.println(u.toString());
+		u.setPassword(password);
+		return service.updatePassword(u);	
+	}
+	
+	@DeleteMapping("/{userId}")
+	public void deleteUser(@PathVariable int userId)
+	{
+		System.out.println("in delete user "+userId);
+		service.deleteUser(userId);
+	}
+}

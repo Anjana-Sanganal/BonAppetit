@@ -1,0 +1,22 @@
+package com.app.services;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.app.dao.IHotelDao;
+import com.app.pojos.Hotel;
+
+@Service
+public class HotelServiceImpl implements IHotelService 
+{
+	@Autowired
+	private IHotelDao dao;
+	@Override
+	public List<Hotel> getAllHotels() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

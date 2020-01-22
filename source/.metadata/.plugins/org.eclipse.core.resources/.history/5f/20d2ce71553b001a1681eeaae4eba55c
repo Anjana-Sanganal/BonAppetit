@@ -1,0 +1,13 @@
+package com.app.dao;
+
+import com.app.pojos.User;
+
+public interface IUserDao 
+{
+	User validateUser(String email,String password);
+	String registerUser(User u);
+	
+	User getUserById(int id);
+	String updatePassword(User u);
+	
+}

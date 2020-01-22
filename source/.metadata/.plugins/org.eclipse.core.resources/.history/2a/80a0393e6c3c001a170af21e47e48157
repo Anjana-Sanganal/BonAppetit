@@ -1,0 +1,63 @@
+package com.app.controller;
+
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.app.pojos.Hotel;
+import com.app.pojos.User;
+import com.app.services.IHotelService;
+
+@RestController
+@CrossOrigin(origins="*")
+@RequestMapping("/hotel")
+public class HotelController 
+{
+	@Autowired
+	private IHotelService service;
+	
+	@PostConstruct
+	public void init()
+	{
+		System.out.println("in init " + service);
+		
+	}
+	
+	@GetMapping("/hotels")
+	public ResponseEntity<?> allHotels() 
+	{
+		System.out.println("in list all hotels");
+		List<Hotel> allHotels = service.getAllHotels();				
+		
+		if (allHotels.size() == 0)
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<List<Hotel>>(allHotels, HttpStatus.OK);
+	}
+	
+	@GetMapping("/{hotel_id}")
+	public ResponseEntity<?> getHotelById(@PathVariable int hotel_id)
+	{
+		System.out.println("in get hotel by Id " + hotel_id);
+		Hotel h = service.getHotelById(hotel_id);
+		System.out.println(h.toString());	
+		if (h == null)
+			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<Hotel>(h, HttpStatus.OK);
+	}
+	
+	@GetMapping("/{name}")
+	public ResponseEntity<?> getHotelByName(@PathVariable String name)
+	{
+		System.out.println("in get hotel by name " + name);
+		Hotel h = service.getHotelByName(name);
+		System.out.println(h.toString());	
+		if (h == null)
+			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<Hotel>(h, HttpStatus.OK);
+	}
+}

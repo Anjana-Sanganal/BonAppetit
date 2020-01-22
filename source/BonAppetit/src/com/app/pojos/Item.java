@@ -58,7 +58,6 @@ public class Item
 		this.name = name;
 	}
 	
-	@Column(length = 20)
 	public String getDescription() {
 		return description;
 	}

@@ -1,0 +1,6 @@
+package com.app.dao;
+
+public interface IItemDao 
+{
+	List<Item> getItemsByHotel(int hotel_id);
+}

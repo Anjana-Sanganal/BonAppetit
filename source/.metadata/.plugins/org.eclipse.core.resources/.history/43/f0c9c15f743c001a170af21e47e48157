@@ -1,0 +1,37 @@
+package com.app.dao;
+
+import java.util.List;
+
+import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
+
+import com.app.pojos.Item;
+
+@Repository
+public class ItemDaoImpl implements IItemDao {
+
+	private SessionFactory sf;
+	@Override
+	public List<Item> getItemsByHotel(int hotel_id) {
+		String jpql = "select i from Item i where i.currentHotel=:hotel_id";
+		return sf.getCurrentSession().createQuery(jpql, Item.class).setParameter("hotel_id", hotel_id).getResultList();
+	}
+
+	@Override
+	public Item getItemById(int itemId) {		
+		return sf.getCurrentSession().get(Item.class, itemId)itemId;
+	}
+
+	@Override
+	public Item addItem(Item i) {
+		sf.getCurrentSession().persist(i);
+		return i;
+	}
+
+	@Override
+	public Item editPrice(int itemId, Item i) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

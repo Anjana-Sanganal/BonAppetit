@@ -4,6 +4,8 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "hotel")
 public class Hotel 
@@ -55,6 +57,7 @@ public class Hotel
 
 
 	@OneToMany(mappedBy = "hotel",cascade = CascadeType.ALL)
+	@JsonIgnore
 	public List<Order> getOrders() {
 		return orders;
 	}
@@ -65,6 +68,7 @@ public class Hotel
 	}
 
 	@OneToMany(mappedBy = "currentHotel",cascade = CascadeType.ALL)
+	@JsonIgnore
 	public List<Item> getItems() {
 		return items;
 	}
@@ -73,7 +77,33 @@ public class Hotel
 	public void setItems(List<Item> items) {
 		this.items = items;
 	}
-
+	
+	//convenience method
+	public void addItem(Item i)
+	{
+		items.add(i);
+		i.setCurrentHotel(this);
+	}
+	
+	public void removeItem(Item i)
+	{
+		items.remove(i);
+		i.setCurrentHotel(null);
+	}
+	
+	public void addOrder(Order o)
+	{
+		orders.add(o);
+		o.setHotel(this);
+	}
+	
+	public void removeOrder(Order o)
+	{
+		orders.remove(o);
+		o.setHotel(null);
+	}
+	
+	
 
 	@Override
 	public String toString() {

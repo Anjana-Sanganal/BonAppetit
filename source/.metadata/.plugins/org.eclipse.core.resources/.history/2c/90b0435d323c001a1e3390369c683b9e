@@ -1,0 +1,73 @@
+package com.app.dao;
+
+import java.util.List;
+
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.app.pojos.User;
+
+@Repository
+public class UserDaoImpl implements IUserDao {
+
+	@Autowired
+	private SessionFactory sf;
+	
+	
+	@Override
+	public User validateUser(String email, String password) {
+		String jpql = "select u from User u where u.email=:email and u.passwd=:password";
+		System.out.println("in validate user");
+		return sf.getCurrentSession().createQuery(jpql, User.class).setParameter("email", email)
+				.setParameter("password", password).getSingleResult();
+	}
+	
+	@Override
+	public User registerUser(User u) 
+	{
+		sf.getCurrentSession().persist(u);
+		System.out.println("in regiter dao");
+		return u;
+	}
+
+	@Override
+	public List<User> getAllUsers() {
+		String jpql = "select u from User u";
+		return sf.getCurrentSession().createQuery(jpql, User.class).getResultList();
+	}
+
+	
+	@Override
+	public User getUserById(int id) 
+	{
+		String jpql = "select u from User u where u.userId=:id";
+		return sf.getCurrentSession().createQuery(jpql, User.class).setParameter("id", id).getSingleResult();
+	}
+	
+	@Override
+	public User updatePassword(User u) 
+	{
+		System.out.println("in dao update pwd "+u.getPassword());
+		System.out.println(u.toString());
+		
+		u.setPassword(user.getPassword());
+		sf.getCurrentSession().update(u);
+		return u;
+	}
+
+	@Override
+	public void deleteUser(User u) {
+		sf.getCurrentSession().delete(u);		
+	}
+
+	@Override
+	public User editProfile(User u) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
+	
+}

@@ -1,0 +1,45 @@
+package com.app.controller;
+
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.app.pojos.User;
+import com.app.services.IHotelService;
+
+@RestController
+@CrossOrigin(origins="*")
+@RequestMapping("/hotel")
+public class HotelController 
+{
+	@Autowired
+	private IHotelService service;
+	
+	@PostConstruct
+	public void init()
+	{
+		System.out.println("in init " + service);
+		
+	}
+	
+	@GetMapping("/hotels")
+	public ResponseEntity<?> allHotels() 
+	{
+		System.out.println("in list all hotels");
+		List<User> allUsers = service.getAllHotels();
+		
+		///testing
+		for (User user : allUsers) {
+			System.out.println(user.toString());
+		}
+		
+		if (allUsers.size() == 0)
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<List<User>>(allUsers, HttpStatus.OK);
+	}
+}

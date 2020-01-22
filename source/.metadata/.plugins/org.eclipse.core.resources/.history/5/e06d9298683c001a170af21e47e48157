@@ -1,0 +1,16 @@
+package com.app.services;
+
+import java.util.List;
+
+import com.app.pojos.Hotel;
+
+public class HotelServiceImpl implements IHotelService 
+{
+
+	@Override
+	public List<Hotel> getAllHotels() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

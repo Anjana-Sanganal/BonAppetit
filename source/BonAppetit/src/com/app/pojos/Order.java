@@ -108,6 +108,19 @@ public class Order
 	public void setOrderDetails(List<OrderDetails> orderDetails) {
 		this.orderDetails = orderDetails;
 	}	
+	
+	//convenience method
+	public void addOrderDetails(OrderDetails o)
+	{
+		orderDetails.add(o);
+		o.setCurrentOrder(this);
+	}
+	
+	public void removeOrderDetails(OrderDetails o)
+	{
+		orderDetails.remove(o);
+		o.setCurrentOrder(null);
+	}
 
 
 	@Override

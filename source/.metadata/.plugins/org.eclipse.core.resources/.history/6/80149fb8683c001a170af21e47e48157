@@ -1,0 +1,19 @@
+package com.app.services;
+
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
+import com.app.pojos.Hotel;
+
+@Repository
+public class HotelServiceImpl implements IHotelService 
+{
+	private SessionFactory sf;
+	@Override
+	public List<Hotel> getAllHotels() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

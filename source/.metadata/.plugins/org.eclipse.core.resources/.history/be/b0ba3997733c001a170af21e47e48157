@@ -1,0 +1,15 @@
+package com.app.dao;
+
+import java.util.List;
+
+import com.app.pojos.Item;
+
+public class ItemDaoImpl implements IItemDao {
+
+	@Override
+	public List<Item> getItemsByHotel(int hotel_id) {
+		
+		return null;
+	}
+
+}
